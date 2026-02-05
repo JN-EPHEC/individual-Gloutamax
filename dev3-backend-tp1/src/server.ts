@@ -20,4 +20,8 @@ const etudiants = [
 
 app.get('/api/data', (req: Request, res: Response) => {
     res.json(etudiants); 
-})
+}); 
+
+app.get('/api/hello/:name', (req: Request, res: Response) => {
+    res.json({"message": `Bonjour ${req.params.name}`, "timestamp": new Date().toISOString()});
+});
