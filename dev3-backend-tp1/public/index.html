@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listes des étudiants</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; padding-top: 50px; }
+        .container { max-width: 600px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);}
+    </style>
+</head>
+<body>
+
+<div class ="container">
+    <h1 class="text-center mb-4">Gestion des étudiants</h1>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Ajouter un étudiant</h5>
+            <form id="userForm">
+                <div class="mb-3">
+                    <label for="firstName" class="form-label">Prénom</label>
+                    <input type="text" class="form-control" id="firstName" placeholder="Ex: Justin" required>
+                </div>
+                <div class="mb-3">
+                    <label for="lastName" class="from-label">Nom</label>
+                    <input type="text" class="form-control" id="lastName" placeholder="Ex: Daub" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Ajouter</button>
+            </form>
+        </div>
+    </div>
+
+    <h5 class="mb-3">Liste des étudiants</h5>
+    <ul id="userList" class="list-group">
+        <li class="list-group-item text-muted text-center">Aucun utilisateur trouvé.</li>
+    </ul>
+</div>
+    <script src="script.js"></script>
+</body>
+</html>
