@@ -6,6 +6,8 @@ import { User } from "./models/User";
 const app: Application = express(); 
 const port = 3000; 
 
+app.use(express.json()); 
+
 app.get('/', (req: Request, res: Response) => {
     res.send("Bienvenue sur mon serveur API.");
 });
