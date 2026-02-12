@@ -1,5 +1,7 @@
 import express, {Application, Request, Response} from 'express'; 
 import userRoutes from "./routes/userRoutes"; // Importation de la route user
+import { sequelize } from "./config/database";
+import { User } from "./models/User";
 
 const app: Application = express(); 
 const port = 3000; 
@@ -28,3 +30,20 @@ app.get('/api/hello/:name', (req: Request, res: Response) => {
 
 // Mise en place du routeur, avec toutes les routes de userRoutes qui utilisent '/api/users'
 app.use('/api/users', userRoutes);
+
+async function startApp() {
+    try {
+        await sequelize.authenticate();
+        console.log('Connexion à SQLite établie');
+        await sequelize.sync({ alter: true});
+        console.log("Synchronisation terminé");
+
+        app.listen(port, () => {
+            console.log(`Serveur lancé sur http://localhost:${port}`);
+        });
+    } catch (error) {
+        console.error('Erreur de connexion avec SQlite:', error);
+    }
+};
+
+startApp();
