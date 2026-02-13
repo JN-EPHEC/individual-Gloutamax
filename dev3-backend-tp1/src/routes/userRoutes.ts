@@ -37,7 +37,7 @@ router.delete('/:id', async (req: Request, res: Response) => {
         });
 
         if (deleted) {
-            res.json({message: `Utilisateur avec l'ID ${id} supprimé.` });
+            res.status(204).json({message: `Utilisateur avec l'ID ${id} supprimé.` });
         } else {
             res.status(404).json({message: "Utilisateur non trouvé. "})
         }

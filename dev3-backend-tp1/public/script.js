@@ -22,14 +22,38 @@ async function loadUser() {
         users.forEach(user => {
             const li = document.createElement('li');
             li.className = 'list-group-item d-flex justify-content-between align-items-center';
+
             li.innerHTML = `
                 <span>${user.firstName} <strong>${user.lastName.toUpperCase()}</strong></span>
-                <span class="badge bg-secondary rounded-pill">ID: ${user.id}</span>
+                <div>
+                    <span class="badge bg-secondary me-2">ID: ${user.id}</span>
+                    <button class="btn btn-danger btn-sm" onclick="deleteUser(${user.id})">X</button>
+                </div>
             `;
             userList.appendChild(li);
         });
     } catch(error) {
         console.error("Erreur lors du chargement:", error);
+    }
+}
+
+async function deleteUser(id) {
+    if (!confirm("Voulez-vous vraiment supprimer cet utilisateur ?")) return ;
+
+    try {
+        const response = await fetch(`/api/users/${id}` , {
+            method: 'DELETE'
+        });
+
+        if (response.ok) {
+            console.log(`Utilisateur ${id} supprimé`);
+            // Actualisation de la liste 
+            loadUser();
+        } else {
+            alert("Erreur lors de la suppression"); 
+        }
+    } catch (error) {
+        console.error("Erreur DELETE:", error);
     }
 }
 
