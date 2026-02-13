@@ -13,5 +13,11 @@ export const User = sequelize.define('User', {
     lastName: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    role: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "Lecteur",
+        values: ["Lecteur", "Editeur", "Admin"]
     }
 }, { tableName: 'User', timestamps: false});
