@@ -5,7 +5,7 @@ export const getUserById = async (id: Number) => {
     return await User.findByPk(id); 
 }
 
-export const updateUser =  async (id: Number, data: { firstName?: string, lastName?: string}) => {
+export const updateUser =  async (id: Number, data: { firstName?: string, lastName?: string, role?: string}) => {
     const [affectedCount] = await User.update(data, {
         where: {id: id }
     });

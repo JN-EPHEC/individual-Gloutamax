@@ -21,7 +21,7 @@
 
 <nav class="navbar navbar-dark shadow">
     <div class="container">
-        <span class="navbar-brand mb-0 h1"><i class="bi bi-database-fill-gear me-2"></i> Gestion des étudiants</span>
+        <span class="navbar-brand mb-0 h1"><i class="bi bi-database-fill-gear me-2"></i> Gestion des utilisateurs</span>
     </div>
 </nav>
 
@@ -29,7 +29,7 @@
     <div class="row g-4">
         <div class="col-md-4">
             <div class="card shadow p-4">
-                <h4 class="mb-4 text-primary" id="formTitle"><i class="bi bi-person-plus-fill"></i> Nouvel Étudiant</h4>
+                <h4 class="mb-4 text-primary" id="formTitle"><i class="bi bi-person-plus-fill"></i> Nouvel Utilisateur</h4>
                 
                 <form id="userForm">
                     <input type="hidden" id="userId"> 
@@ -45,8 +45,8 @@
 
                     <div class="form-floating mb-3">
                         <select class="form-select" id="role" aria-label="Sélection du rôle">
-                            <option value="Étudiant" selected>Lecteur</option>
-                            <option value="Délégué">Editeur</option>
+                            <option value="Étudiant" selected>Étudiant</option>
+                            <option value="Délégué">Délégué</option>
                             <option value="Admin">Admin</option>
                             </select>
                         <label for="role">Rôle / Statut</label>
@@ -66,8 +66,8 @@
         <div class="col-md-8">
             <div class="card shadow p-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h4 class="text-secondary mb-0"><i class="bi bi-people-fill me-2"></i>Liste des étudiants</h4>
-                    <span id="userCount" class="badge bg-info">0 Étudiants</span>
+                    <h4 class="text-secondary mb-0"><i class="bi bi-people-fill me-2"></i>Liste des utilisateurs</h4>
+                    <span id="userCount" class="badge bg-info">0 Utilisateurs</span>
                 </div>
                 
                 <div id="userListContainer">

@@ -48,13 +48,13 @@ router.post('/', async (req: Request, res: Response) => {
 router.put("/:id", async (req: Request, res: Response) => {
     try {
         const id = Number(req.params.id); 
-        const { firstName, lastName } = req.body; 
+        const { firstName, lastName, role } = req.body; 
 
         if (isNaN(id)) {
             res.status(400).json({ message: "ID invalide" });
         }
 
-        const updatedUser = await userService.updateUser(id, { firstName, lastName} );
+        const updatedUser = await userService.updateUser(id, { firstName, lastName, role } );
 
         if (!updatedUser) {
             return res.status(404).json({ message: "Utilisateur non trouvé" });
