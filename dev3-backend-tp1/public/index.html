@@ -13,6 +13,7 @@
         .card { border: none; border-radius: 12px; transition: transform 0.2s; }
         .card:hover { transform: translateY(-5px); }
         .shadow-sm { box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important; }
+        /* Style pour les items de la liste */
         .user-item { border-left: 5px solid #3498db; margin-bottom: 10px; border-radius: 8px !important; }
     </style>
 </head>
@@ -28,8 +29,11 @@
     <div class="row g-4">
         <div class="col-md-4">
             <div class="card shadow p-4">
-                <h4 class="mb-4 text-primary"><i class="bi bi-person-plus-fill"></i> Nouvel Étudiant</h4>
+                <h4 class="mb-4 text-primary" id="formTitle"><i class="bi bi-person-plus-fill"></i> Nouvel Étudiant</h4>
+                
                 <form id="userForm">
+                    <input type="hidden" id="userId"> 
+
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="firstName" placeholder="Prénom" required>
                         <label for="firstName">Prénom</label>
@@ -38,8 +42,22 @@
                         <input type="text" class="form-control" id="lastName" placeholder="Nom" required>
                         <label for="lastName">Nom de famille</label>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100 py-3 fw-bold">
-                        <i class="bi bi-check-circle-fill me-2"></i>Enregistrer
+
+                    <div class="form-floating mb-3">
+                        <select class="form-select" id="role" aria-label="Sélection du rôle">
+                            <option value="Étudiant" selected>Lecteur</option>
+                            <option value="Délégué">Editeur</option>
+                            <option value="Admin">Admin</option>
+                            </select>
+                        <label for="role">Rôle / Statut</label>
+                    </div>
+
+                    <button type="submit" id="submitBtn" class="btn btn-primary w-100 py-3 fw-bold">
+                        <i class="bi bi-check-circle-fill me-2"></i><span>Enregistrer</span>
+                    </button>
+
+                    <button type="button" id="cancelBtn" class="btn btn-secondary w-100 mt-2 d-none">
+                        Annuler l'édition
                     </button>
                 </form>
             </div>

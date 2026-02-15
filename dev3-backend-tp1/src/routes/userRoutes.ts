@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import * as userService from "../services/userService"; 
+import { User } from "../models/User";
 
 // Création du router 
 const router = Router();
@@ -8,7 +9,7 @@ const router = Router();
 // Get : Récupération de tous les utilisateurs
 router.get('/', async (req: Request, res: Response) => {
     try {
-        const users = await User.findAll();
+        const users = await userService.getAllUsers();
         res.json(users);
     } catch(error) {
         res.status(500).json(({ message: "Erreur lors de la récupération", error}));
@@ -35,8 +36,8 @@ router.get('/:id', async (req: Request, res: Response) => {
 // Post : Création d'un utilisateur
 router.post('/', async (req: Request, res: Response) => {
     try {
-        const {firstName, lastName} = req.body;
-        const newUser = await User.create({ firstName, lastName });
+        const {firstName, lastName, role} = req.body;
+        const newUser = await User.create({ firstName, lastName, role });
         res.status(201).json(newUser);
     } catch(error) {
         res.status(400).json({ message: "Erreur lors de la création", error});

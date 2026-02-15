@@ -15,3 +15,7 @@ export const updateUser =  async (id: Number, data: { firstName?: string, lastNa
     // Récupération de l'utilisateur mis à jour pour le renvoyer
     return await User.findByPk(id); 
 }
+
+export const getAllUsers = async () => {
+    return await User.findAll();
+}

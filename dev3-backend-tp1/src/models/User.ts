@@ -5,6 +5,7 @@ export const User = sequelize.define('User', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
     },
     firstName: {
         type: DataTypes.STRING,
@@ -15,9 +16,12 @@ export const User = sequelize.define('User', {
         allowNull: false
     },
     role: {
-        type: DataTypes.STRING,
+        // Utilise ENUM pour restreindre les choix, ou reste en STRING
+        type: DataTypes.ENUM("Étudiant", "Délégué", "Admin", "Lecteur", "Editeur"), 
         allowNull: false,
-        defaultValue: "Lecteur",
-        values: ["Lecteur", "Editeur", "Admin"]
+        defaultValue: "Étudiant"
     }
-}, { tableName: 'User', timestamps: false});
+}, { 
+    tableName: 'User', 
+    timestamps: true
+});
