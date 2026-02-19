@@ -1,7 +1,7 @@
 import express, {Application, Request, Response} from 'express'; 
 import userRoutes from "./routes/userRoutes"; // Importation de la route user
 import { sequelize } from "./config/database";
-import { User } from "./models/User";
+import { requestLogger } from "./middlewares/logger";
 
 const app: Application = express(); 
 const port = 3000; 
@@ -9,6 +9,8 @@ const port = 3000;
 app.use(express.json()); 
 
 app.use(express.static('public')); 
+
+app.use(requestLogger); 
 
 app.get('/', (req: Request, res: Response) => {
     res.send("Bienvenue sur mon serveur API.");
