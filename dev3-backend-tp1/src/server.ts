@@ -3,9 +3,13 @@ import userRoutes from "./routes/userRoutes"; // Importation de la route user
 import { sequelize } from "./config/database";
 import { requestLogger } from "./middlewares/logger";
 import { errorHandler } from "./middlewares/errorHandler";
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from './config/swagger';
 
 const app: Application = express(); 
 const port = 3000; 
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(express.json()); 
 
