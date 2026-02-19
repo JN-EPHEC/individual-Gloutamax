@@ -1,6 +1,6 @@
 import * as userController from "../controllers/userController"
 import { Router } from "express";
-// Création du router 
+import { checkIdParam } from '../middlewares/checkIdParam' 
 const router = Router();
 
 // == DEFINITION DES METHODES DE REFACTORING API ==
@@ -43,6 +43,6 @@ router.post('/', userController.createUser)
  *       404:
  *         description: Utilisateur non trouvé
  */
-router.delete('/:id', userController.deleteUser);
+router.delete('/:id', checkIdParam, userController.deleteUser);
 
 export default router;  
