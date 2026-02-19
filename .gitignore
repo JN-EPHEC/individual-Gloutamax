@@ -1,0 +1,9 @@
+# Dépendances
+node_modules/
+
+# Dossier de compilation (le code JS généré à partir de votre TS)
+dist/
+build/
+
+# Fichiers d'environnement (très important pour la sécurité !)
+.env
