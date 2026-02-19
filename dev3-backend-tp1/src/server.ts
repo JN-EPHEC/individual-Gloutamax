@@ -2,6 +2,7 @@ import express, {Application, Request, Response} from 'express';
 import userRoutes from "./routes/userRoutes"; // Importation de la route user
 import { sequelize } from "./config/database";
 import { requestLogger } from "./middlewares/logger";
+import { errorHandler } from "./middlewares/errorHandler";
 
 const app: Application = express(); 
 const port = 3000; 
@@ -51,5 +52,7 @@ async function startApp() {
         console.error('Erreur de connexion avec SQlite:', error);
     }
 };
+
+app.use(errorHandler);
 
 startApp();

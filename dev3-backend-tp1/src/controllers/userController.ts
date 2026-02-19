@@ -1,26 +1,26 @@
-import type { Request, Response } from "express";
+import type { Request, Response, NextFunction} from "express";
 import User from "../models/User"
 
-export const getAllUsers = async (req: Request, res: Response) => {
+export const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const users = await User.findAll();
         res.status(200).json(users);
     } catch (error){
-        res.status(500).json({ error: (error as any).message });
+        next(error);
     }
 };
 
-export const createUser = async (req: Request, res: Response) => {
+export const createUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const {firstName, lastName} = req.body; 
         const newUser = await User.create({ firstName, lastName});
         res.status(201).json(newUser);
     } catch(error) {
-        res.status(400).json({ message: "Erreur lors de la création", error}); 
+        next(error);
     }
 };
 
-export const deleteUser = async (req: Request, res: Response) => {
+export const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.params;
 
@@ -34,6 +34,6 @@ export const deleteUser = async (req: Request, res: Response) => {
             res.status(404).json({message:"Utilisateur non trouvé."})
         }
     } catch (error) {
-        res.status(500).json({message: "Erreur lors de la suppresion", error});
+        next(error);
     }
 };
