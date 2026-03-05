@@ -10,3 +10,6 @@ build/
 
 # Dossier idea de webstorm
 .idea
+
+# Dossier coverge de jest 
+coverage/
