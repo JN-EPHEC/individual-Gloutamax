@@ -37,7 +37,7 @@ export const validateUserRegistration = (age: number, role: Role | string, email
   }
 
   if (age > 120) {
-    throw new Error("Âge invalide");
+    throw new Error("Age invalide");
   }
 
   // 3. Validation de l'email
