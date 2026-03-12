@@ -1,0 +1,30 @@
+{
+  "development": {
+    "username": "postgres.dnjhugaoulryxaytkxla",
+    "password": "Nj5rWA7u5tr9uW",
+    "database": "postgres",
+    "host": "aws-1-eu-west-3.pooler.supabase.com",
+    "port": 6543,
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
