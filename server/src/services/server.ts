@@ -1,6 +1,6 @@
-import express, {Application, Request, Response} from 'express'; 
+import express, { type Application, type Request, type Response} from 'express'; 
 import userRoutes from "../routes/userRoutes"; // Importation de la route user
-import { sequelize } from "../config/database";
+import sequelize from "../config/database";
 import { requestLogger } from "../middlewares/logger";
 import { errorHandler } from "../middlewares/errorHandler";
 import swaggerUi from "swagger-ui-express";

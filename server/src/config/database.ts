@@ -1,3 +1,5 @@
+import { Sequelize } from 'sequelize';
+
 const sequelize = process.env.DATABASE_URL
   ? new Sequelize(process.env.DATABASE_URL, {
       dialect: "postgres",
@@ -11,9 +13,9 @@ const sequelize = process.env.DATABASE_URL
     })
   : new Sequelize({
       username: process.env.DB_USER || "postgres",
-      password: process.env.DB_PASSWORD,
+      password: process.env.DB_PASSWORD || "",
       database: process.env.DB_NAME || "postgres",
-      host: process.env.DB_HOST,
+      host: process.env.DB_HOST || "localhost",
       port: Number(process.env.DB_PORT || 5432),
       dialect: "postgres",
       dialectOptions: {
@@ -24,3 +26,5 @@ const sequelize = process.env.DATABASE_URL
       },
       logging: false,
     });
+
+export default sequelize;

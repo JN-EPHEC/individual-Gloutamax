@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express"; 
+import { type Request, type Response, type NextFunction } from "express"; 
 
 // L'interface permet de typer l'erreur, ou vous pouvez utiliser 'any' pour plus de souplesse
 export const errorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {

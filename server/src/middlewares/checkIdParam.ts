@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
+import { type Request, type Response, type NextFunction } from 'express';
 
 export const checkIdParam = (req: Request, res: Response, next: NextFunction) => {
-  const { id } = req.params;
+  const id = String(req.params.id);
 
   // L'expression régulière /^\d+$/ vérifie que la chaîne ne contient QUE des chiffres
   if (!id || !/^\d+$/.test(id)) {

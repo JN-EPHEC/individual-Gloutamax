@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "postgres.dnjhugaoulryxaytkxla",
-    "password": "Nj5rWA7u5tr9uW",
+    "password": "Nj5rWA7u5tr9u",
     "database": "postgres",
     "host": "aws-1-eu-west-3.pooler.supabase.com",
     "port": 6543,
