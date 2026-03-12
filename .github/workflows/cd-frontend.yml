@@ -28,6 +28,8 @@ jobs:
                 host: ${{ secrets.SERVER_IP }}
                 username: ${{ secrets.SERVER_USER }}
                 key: ${{ secrets.SSH_PRIVATE_KEY }}
+                passphrase: ${{ secrets.SSH_PASSPHRASE }}
+                port: 62212
                 source: "client/dist/*"
                 target: "/var/www/html/"
                 strip_components: 2
