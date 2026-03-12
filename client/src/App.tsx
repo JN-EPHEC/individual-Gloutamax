@@ -85,7 +85,7 @@ export default function App() {
       <nav className="navbar navbar-dark shadow" style={{ background: '#2c3e50', marginBottom: '40px' }}>
         <div className="container">
           <span className="navbar-brand mb-0 h1">
-            <i className="bi bi-database-fill-gear me-2"></i> Gestion des étudiants (React, le bg)
+            <i className="bi bi-database-fill-gear me-2"></i> Gestion des étudiants (React)
           </span>
         </div>
       </nav>
