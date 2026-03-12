@@ -22,7 +22,7 @@ export default function App() {
     try {
       // Attention: Assurez-vous que Vite est configuré pour faire un proxy vers le port 3000 de votre API,
       // sinon il faut mettre l'URL complète 'http://localhost:3000/api/users'
-      const response = await fetch('http://localhost:3000/api/users');
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/users`);
       const data = await response.json();
       setUsers(data);
     } catch (error) {
@@ -43,7 +43,7 @@ export default function App() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:3000/api/users', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/users`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ firstName, lastName })
@@ -66,7 +66,7 @@ export default function App() {
     if (!window.confirm("Voulez-vous vraiment supprimer cet étudiant ?")) return;
 
     try {
-      const response = await fetch(`http://localhost:3000/api/users/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/users/${id}`, {
         method: 'DELETE'
       });
 
