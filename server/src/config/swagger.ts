@@ -13,7 +13,12 @@ const swaggerOptions = {
                 basicAuth: {
                     type: 'http',
                     scheme: 'basic'
-                }
+                },
+                bearerAuth: {
+                    type: 'http',
+                    scheme: 'bearer',
+                    bearerFormat: 'JWT'
+                },
             },
             digestAuth: {
                 type: 'http',
