@@ -8,6 +8,8 @@ import swaggerUi from "swagger-ui-express";
 import { swaggerSpec } from '../config/swagger';
 import cors from 'cors';
 import Database from '../config/database'; // Import de la classe
+import authRoutes from "../routes/authRoutes";
+import 'dotenv/config'
 
 const app: Application = express(); 
 const port = 3000; 
@@ -46,6 +48,7 @@ app.get('/api/hello/:name', (req: Request, res: Response) => {
 app.use('/api/users', userRoutes);
 // Ajoute du routeur, avec toutes les routes de adminRoutes qui utilisent '/api/admin/basic'
 app.use(adminRoutes);
+app.use(authRoutes);
 
 async function startApp() {
     try {
