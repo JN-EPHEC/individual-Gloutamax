@@ -26,6 +26,8 @@
     "@types/cors": "^2.8.19",
     "cors": "^2.8.6",
     "express": "^5.2.1",
+    "http-auth": "^4.2.1",
+    "http-auth-connect": "^1.0.6",
     "pg": "^8.20.0",
     "sequelize": "^6.37.7",
     "sqlite3": "^5.1.7",
@@ -35,6 +37,7 @@
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
+    "@types/http-auth": "^4.1.4",
     "@types/jest": "^30.0.0",
     "@types/node": "^25.2.3",
     "@types/supertest": "^7.2.0",

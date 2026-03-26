@@ -1,4 +1,5 @@
 import swaggerJsdoc from "swagger-jsdoc";
+import { digestAuth } from "../middlewares/digestAuth";
 
 const swaggerOptions = {
     definition: {
@@ -13,6 +14,10 @@ const swaggerOptions = {
                     type: 'http',
                     scheme: 'basic'
                 }
+            },
+            digestAuth: {
+                type: 'http',
+                scheme: 'digest'
             }
         }
     },
