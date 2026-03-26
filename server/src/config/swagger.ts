@@ -7,6 +7,14 @@ const swaggerOptions = {
             title: "Mon API Géniale",
             version: "1.0.0",
         },
+        components: {
+            securitySchemes: {
+                basicAuth: {
+                    type: 'http',
+                    scheme: 'basic'
+                }
+            }
+        }
     },
     apis: ["./src/routes/*.ts"],
 }; 

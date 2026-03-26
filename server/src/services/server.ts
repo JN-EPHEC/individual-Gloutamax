@@ -1,14 +1,18 @@
 import express, { type Application, type Request, type Response} from 'express'; 
 import userRoutes from "../routes/userRoutes"; // Importation de la route user
+import adminRoutes from "../routes/adminRoutes"; // Importation de la route admin
 import sequelize from "../config/database";
 import { requestLogger } from "../middlewares/logger";
 import { errorHandler } from "../middlewares/errorHandler";
 import swaggerUi from "swagger-ui-express";
 import { swaggerSpec } from '../config/swagger';
 import cors from 'cors';
+import Database from '../config/database'; // Import de la classe
 
 const app: Application = express(); 
 const port = 3000; 
+
+const sequelize = Database.getInstance();
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
@@ -22,10 +26,6 @@ app.use(requestLogger);
 
 app.get('/', (req: Request, res: Response) => {
     res.send("Bienvenue sur mon serveur API.");
-});
-
-app.listen(port, () => {
-    console.log(`Serveur lancé sur http://localhost:${port}`);
 });
 
 const etudiants = [
@@ -44,14 +44,18 @@ app.get('/api/hello/:name', (req: Request, res: Response) => {
 
 // Mise en place du routeur, avec toutes les routes de userRoutes qui utilisent '/api/users'
 app.use('/api/users', userRoutes);
+// Ajoute du routeur, avec toutes les routes de adminRoutes qui utilisent '/api/admin/basic'
+app.use(adminRoutes);
 
 async function startApp() {
     try {
-        await sequelize.authenticate();
-        console.log('Connexion à SQLite établie');
-        await sequelize.sync({ alter: true});
-        console.log("Synchronisation terminé");
+        // On met la base de donnée en pause pour le TP7
+        // await sequelize.authenticate();
+        // console.log('Connexion à SQLite établie');
+        // await sequelize.sync({ alter: true});
+        // console.log("Synchronisation terminé");
 
+        // On lance juste le serveur Express
         app.listen(port, () => {
             console.log(`Serveur lancé sur http://localhost:${port}`);
         });
