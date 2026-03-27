@@ -15,20 +15,56 @@ export default function App() {
   const [lastName, setLastName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  // -- NOUVEAUX ETATS POUR L'AUTH ---
+  // On vérifie au démarrage si on a déjà un token dans le LocalStorage
+  const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('accessToken'));
+  const [loginUsername, setLoginUsername] = useState('student');
+  const [loginPassword, setLoginPassword] = useState('password123');
+
   // --- 2. LES FONCTIONS (Anciennement dans script.js) ---
 
   // Remplacer "loadUser"
   const fetchUsers = async () => {
+    if (!isAuthenticated) return; // Inutile de charger si pas connecté
+
     try {
-      // Attention: Assurez-vous que Vite est configuré pour faire un proxy vers le port 3000 de votre API,
-      // sinon il faut mettre l'URL complète 'http://localhost:3000/api/users'
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/users`);
-      const data = await response.json();
-      setUsers(data);
+      const token = localStorage.getItem('accessToken');
+
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/data`, {
+        // On ajoute l'en-tête ici
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (response.status === 401) {
+        // Le token a expiré !
+        console.log("Token expiré, veuillez vous reconnecter.");
+        handleLogout(); // On déconnecte l'utilisateur pour qu'il se relogue
+        return;
+      }
+
+      // On sécurise le frontend pour éviter l'écran blanc
+      if (response.ok) {
+        const data = await response.json();
+        setUsers(Array.isArray(data) ? data: []);
+      } else {
+        setUsers([]);
+      }
+
     } catch (error) {
       console.error("Erreur lors du chargement:", error);
+      setUsers([]);
     }
   };
+
+  useEffect(() => {
+    // On charge les utiliseurs que si on est connecté
+    if (isAuthenticated) {
+      fetchUsers();
+    }
+  }, [isAuthenticated]); // Le useEffect se relance quand isAutheticated change
+  
 
   // Le Hook useEffect permet de lancer fetchUsers au démarrage de l'app (équivalent du loadUser() final)
   useEffect(() => {
@@ -78,15 +114,89 @@ export default function App() {
     }
   };
 
-  // --- 3. L'AFFICHAGE (Le rendu JSX, anciennement dans le fichier HTML) ---
+  // --- NOUVELLE FONCTION DE LOGIN ---
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: loginUsername, password: loginPassword })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        // Sauvegarde de l'Access Token (comme demandé dans le TP)
+        localStorage.setItem('accessToken', data.accessToken);
+        setIsAuthenticated(true);
+      } else {
+        alert("Identifiants incorrects");
+      }
+    } catch(error) {
+      console.error("Erreur de connexion:", error);
+    }
+  };
+
+  // Petite fonction de logout bonus
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    setIsAuthenticated(false);
+  }
+
+  // --- 3. L'AFFICHAGE (Le rendu JSX) ---
+  // SI NON CONNECTÉ : On affiche l'écran de Login
+  if (!isAuthenticated) {
+    return (
+      <div style={{ background: '#f0f2f5', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Segoe UI', sans-serif" }}>
+        <div className="card shadow p-4 border-0" style={{ width: '100%', maxWidth: '400px', borderRadius: '12px' }}>
+          <h3 className="text-center mb-4 text-primary"><i className="bi bi-box-arrow-in-right me-2"></i>Connexion</h3>
+          <form onSubmit={handleLogin}>
+            <div className="form-floating mb-3">
+              <input 
+                type="text" 
+                className="form-control" 
+                id="loginUsername"
+                value={loginUsername}
+                onChange={(e) => setLoginUsername(e.target.value)}
+                placeholder="Nom d'utilisateur"
+                required
+              />
+              <label htmlFor="loginUsername">Nom d'utilisateur</label>
+            </div>
+            <div className="form-floating mb-4">
+              <input 
+                type="password" 
+                className="form-control" 
+                id="loginPassword"
+                value={loginPassword}
+                onChange={(e) => setLoginPassword(e.target.value)}
+                placeholder="Mot de passe"
+                required
+              />
+              <label htmlFor="loginPassword">Mot de passe</label>
+            </div>
+            <button type="submit" className="btn btn-primary w-100 py-3 fw-bold">
+              Se connecter
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
+  // SI CONNECTÉ : On affiche l'application normale
   return (
     <div style={{ background: '#f0f2f5', minHeight: '100vh', fontFamily: "'Segoe UI', sans-serif" }}>
       
       <nav className="navbar navbar-dark shadow" style={{ background: '#2c3e50', marginBottom: '40px' }}>
         <div className="container">
           <span className="navbar-brand mb-0 h1">
-            <i className="bi bi-database-fill-gear me-2"></i> Gestion des étudiants (React)
+            <i className="bi bi-database-fill-gear me-2"></i> Gestion des étudiants (Sécurisée)
           </span>
+          {/* NOUVEAU : Le bouton de déconnexion */}
+          <button className="btn btn-outline-light btn-sm fw-bold" onClick={handleLogout}>
+            <i className="bi bi-box-arrow-left me-2"></i>Déconnexion
+          </button>
         </div>
       </nav>
 
@@ -105,7 +215,7 @@ export default function App() {
                     id="firstName" 
                     placeholder="Prénom" 
                     value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)} // React met à jour la variable à chaque frappe
+                    onChange={(e) => setFirstName(e.target.value)}
                     required 
                   />
                   <label htmlFor="firstName">Prénom</label>
@@ -144,10 +254,9 @@ export default function App() {
                 {users.length === 0 ? (
                   <li className="list-group-item text-muted text-center border-0">Aucun utilisateur.</li>
                 ) : (
-                  // Dans React, on utilise .map() pour boucler sur un tableau et créer des éléments HTML
                   users.map(user => (
                     <li 
-                      key={user.id} // React a besoin d'une clé unique pour chaque élément de liste
+                      key={user.id} 
                       className="list-group-item d-flex justify-content-between align-items-center shadow-sm p-3 mb-2"
                       style={{ borderLeft: '5px solid #3498db', borderRadius: '8px' }}
                     >

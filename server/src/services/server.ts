@@ -35,9 +35,9 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 const etudiants = [
-    { id: 1, nom: "Dupont", prenom: "Jean" },
-    { id: 2, nom: "Martin", prenom: "Sophie" },
-    { id: 3, nom: "Doe", prenom: "John" },
+    { id: 1, lastName: "Dupont", firstName: "Jean" },
+    { id: 2, lastName: "Martin", firstName: "Sophie" },
+    { id: 3, lastName: "Doe", firstName: "John" },
 ];
 
 app.get('/api/data', (req: Request, res: Response) => {
