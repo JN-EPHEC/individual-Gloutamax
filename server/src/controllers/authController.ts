@@ -59,3 +59,39 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         next(error);
     }
 };
+
+export const refresh = async (req: Request, res: Response, next: NextFunction) =>
+{
+    try {
+        // On récupère le cookie que la navigateur nous envoie automatiquement
+        const refreshToken = req.cookies?.refreshToken;
+
+        if (!refreshToken) {
+            return res.status(401).json({ message: "Refresh Token manquant" });
+        }
+
+        const refreshSecret = process.env.JWT_REFRESH_SECRET;
+        if (!refreshSecret) throw new Error("Secret Refresh manquant");
+
+        // On vérifie que le Refresh Token est valide et non expiré
+        jwt.verify(refreshToken, refreshSecret, (err: any, decoded: any) => {
+            if (err) {
+                return res.status(403).json({ message: "Refresh Token invalide ou expiré" });
+            }
+
+            const accessSecret = process.env.JWT_ACCESS_SECRET;
+            if (!accessSecret) throw new Error("Secret Access manquant");
+
+            // Si tout est bon, on fabrique un NOUVEL Access Token de 15 minutes
+            const newAccessToken = jwt.sign(
+                { id: decoded.id, username: decoded.username, role: "admin" },
+                accessSecret,
+                { expiresIn: "15m" }
+            );
+            // On le renvoie au client
+            res.status(200).json({ accessToken: newAccessToken });
+        });
+    } catch(error) {
+        next(error);
+    }
+};

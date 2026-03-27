@@ -30,4 +30,20 @@ const router = Router();
  */
 router.post('/api/auth/login', authController.login);
 
+/**
+ * @swagger
+ * /api/auth/refresh:
+ *   post:
+ *     summary: Obtenir un nouvel Access Token grâce au cookie
+ *     tags: [Auth]
+ *     responses:
+ *       200:
+ *         description: Nouvel Access Token généré avec succès
+ *       401:
+ *         description: Aucun Refresh Token trouvé dans les cookies
+ *       403:
+ *         description: Refresh Token invalide ou expiré
+ */
+router.post('/api/auth/refresh', authController.refresh); 
+
 export default router;

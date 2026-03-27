@@ -11,6 +11,7 @@ import Database from '../config/database'; // Import de la classe
 import authRoutes from "../routes/authRoutes";
 import profileRoutes from "../routes/profileRoutes";
 import 'dotenv/config'
+import cookieParser from 'cookie-parser';
 
 const app: Application = express(); 
 const port = 3000; 
@@ -19,7 +20,9 @@ const sequelize = Database.getInstance();
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.use(express.json()); 
+app.use(express.json());
+
+app.use(cookieParser());
 
 app.use(cors());
 
